@@ -12,7 +12,7 @@ import Login from '@/components/Login'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  const [login, setLogin] = useState<string>('');
+  const [login, setLogin] = useState<number>(0);
   console.log(login);
   
   return (
@@ -40,14 +40,14 @@ export default function Home() {
               <p className='text-white text-lg'>Twitter users are the first to know.</p>
             </div>
             <div className='flex py-3 space-x-3'>
-              <button onClick={()=>setLogin('Sign in to Twitter')} className='rounded-full border-[1px] px-5 max-h-fit hover:bg-green-500 border-white text-white'>Log in</button>
-              <button onClick={()=>setLogin('Join Twitter today')} className='rounded-full px-5 bg-white font-bold text-black'>Sign up</button>
+              <button onClick={()=>setLogin(1)} className='rounded-full border-[1px] px-5 max-h-fit hover:bg-green-500 border-white text-white'>Log in</button>
+              <button onClick={()=>setLogin(2)} className='rounded-full px-5 bg-white font-bold text-black'>Sign up</button>
             </div>
           </div>
       </div>
       {
-        login != '' ? 
-        <div className='absolute w-[40%] top-[10%] left-[30%]'>
+        login == 1 || login == 2 ? 
+        <div className='absolute w-[35%] top-[10%] left-[30%]'>
           <Login mess={login} set={setLogin} />
         </div>
         : null
