@@ -30,6 +30,7 @@ function Page4({set, fm, setFormData, image}: any) {
         }).catch((err) => {
           console.log(err);
         });
+        window.location.reload()
     }
   return (
     <>

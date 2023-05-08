@@ -35,7 +35,7 @@ function Login({mess, set}: Props) {
       Cookies.set("password", res.data[0].password);
     })
     .catch(err=>console.log(err))
-
+    window.location.reload()
   }
 
   const signup = [

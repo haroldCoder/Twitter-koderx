@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import coder from '../assets/coder.png'
 import { SearchRounded } from '@mui/icons-material'
@@ -13,8 +13,8 @@ function TweetBox() {
     const [input, setInput] = useState<string>('')
     const [perf, setPerf] = useState<any>();
     const perfilSrc : any = new Blob([new Uint8Array(perf)], { type: "image/png" })
+    const [id, setId] = useState<number>(0);
     
-
     const getPerf = async() =>{
         await axios.get("http://localhost:5000/apitwt/users")
         .then(res=>{
@@ -26,16 +26,35 @@ function TweetBox() {
         })
     }
 
-    useMemo(()=>{
-        getPerf()
-    }, perf)
+    useEffect(()=>{
+        getPerf()  
+    }, [])
 
+
+    const PostTwitt = async(e: any) =>{
+        e.preventDefault();
+
+        const res = await axios.get("http://localhost:5000/apitwt/userid/"+Cookies.get("name"))
+        .then(res=>{setId(res.data[0].id), console.log(res.data)
+        })
+        .catch(err=>console.log(err)) 
+
+        axios.post("http://localhost:5000/apitwt/newtwt", {
+            content: input,
+            iduser: id
+        })
+        .then(res=>console.log(res)
+        )
+        .catch(err=>console.log(err)
+        )
+
+    }
   return (
     <div className='flex space-x-2 p-5'>
-        <Image src={URL.createObjectURL(perfilSrc)} width='100' height={100} className='w-14 mt-4 object-cover h-14 rounded-full' alt='perfil' />
+        <Image src={perf ? URL.createObjectURL(perfilSrc) : coder} width='100' height={100} className='w-14 mt-4 object-cover h-14 rounded-full' alt='perfil' />
         <div className='flex flex-1 pl-2 items-center'>
-            <form action="" className='flex flex-col flex-1'>
-                <input type="text" value={input} onChange={(e)=>{setInput(e.target.value)}} style={{cursor: "text"}} className='outline-none bg-transparent h-24 w-full text-xl placeholder:text-xl text-white' placeholder="What's Happening?" />
+            <form onSubmit={PostTwitt} action="" className='flex flex-col flex-1'>
+                <input type="text" disabled={Cookies.get("name") == ""} value={input} onChange={(e)=>{setInput(e.target.value)}} style={{cursor: "text"}} className='outline-none bg-transparent h-24 w-full text-xl placeholder:text-xl text-white' placeholder="What's Happening?" />
                 <div className='flex items-center'>
                     <div className='text-green-400 flex-1 my-3 space-x-3 flex-wrap'>
                         {/* icons */}

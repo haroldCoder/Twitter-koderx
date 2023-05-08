@@ -13,7 +13,6 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   const [login, setLogin] = useState<number>(0);
-  console.log(login);
   
   return (
     <div className=' '>

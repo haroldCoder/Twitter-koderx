@@ -46,12 +46,46 @@ app.get("/apitwt/users/login/:user/:password", (req, res)=>{
     })
 })
 
+app.get("/apitwt/userid/:name", (req, res)=>{
+    const {name} = req.params;
+
+    db.query(`SELECT id FROM users WHERE name = "${name}"`, (err, resu)=>{
+        if(err) throw err;
+        res.json(resu);
+    })
+})
+
+app.get("/apitwt/tweets", (req, res)=>{
+    db.query("SELECT * FROM tweets", (err, resu)=>{
+        if(err) throw err;
+        res.json(resu);
+    })
+})
+
+app.post("/apitwt/newtwt", (req, res)=>{
+    const {content, iduser} = req.body;
+
+    db.query(`INSERT INTO tweets(content, iduser, date) VALUES ("${content}", ${iduser}, NOW())`, (err, resu)=>{
+        if(err) throw err;
+        res.json({"message": "twt posted"})
+    })
+})
+
 app.post("/apitwt/users",upload.single('imagen'), (req, res)=>{
     const {name, tel, email, password} = req.body;
-    const sql = 'INSERT INTO users (name, tel, email, password, perf) VALUES (?, ?, ?, ?, ?)';
-    db.query(sql, [name, tel, email, password, req.file.buffer], (err, result) => {
-        if (err) throw err;
-        res.send('Image uploaded successfully');
+
+    const selectSql = 'SELECT * FROM users WHERE name = ? OR tel = ? OR email = ?';
+    db.query(selectSql, [name, tel, email], (err, result) => {
+        if (err) throw err, res.send("9"), console.log(err);
+        if (result.length > 0) {
+            res.send('Error: this data exist in to db');
+        } else {
+            const insertSql = 'INSERT INTO users (name, tel, email, password, perf) VALUES (?, ?, ?, ?, ?)';
+            db.query(insertSql, [name, tel, email, password, req.file.buffer], (err, result) => {
+                if (err) throw err, res.send(err);
+                res.send('Image uploaded successfully');
+            });
+        }
     });
 })
 

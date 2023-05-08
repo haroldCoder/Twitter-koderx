@@ -1,9 +1,6 @@
 import React,{useState} from 'react'
 import { CloseOutlined } from '@mui/icons-material'
 import Image from 'next/image';
-import { log } from 'console';
-import axios from 'axios'
-import { url } from 'inspector';
 
 function Page3({set, formData, setImage, setIndex, index}: any) {
     const [files, setFile] = useState<File | any>();

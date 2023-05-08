@@ -1,8 +1,20 @@
 import AutorenewIcon from '@mui/icons-material/Autorenew';
-import React from 'react'
+import React, {useEffect, useMemo, useState} from 'react'
 import TweetBox from './TweetBox';
+import axios from 'axios';
 
 function Feed() {
+
+  const [twts, setTwts] = useState<any>([])
+
+  useEffect(()=>{
+    getTweets();
+  }, [])
+
+  const getTweets = async() =>{
+    const res = (await axios.get("http://localhost:5000/apitwt/tweets")).data;
+    setTwts(res);
+}
   return (
     <div className='col-span-7 ml-3 lg:col-span-5'>
         <div className='text-white flex items-center justify-between'>
@@ -10,6 +22,15 @@ function Feed() {
             <AutorenewIcon className='cursor-pointer h-8 mt-5 mr-3 w-8 text-green-600 transition-all duration-500 ease-out hover:rotate-180 active:scale-125'/>
         </div>
         <TweetBox/>
+        {
+            twts != "" ?
+            twts.map((e: any) =>(
+                <div className='text-white'>
+                    {e.content}
+                </div>
+            ))
+            : null
+        }
     </div>
   )
 }
