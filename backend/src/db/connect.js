@@ -8,6 +8,7 @@ const {
   } = require("./credentials");
 
 const db = mysql.createConnection({
+    port: DB_PORT,
     "host": DB_HOST,
     "database": DB_NAME,
     "password": DB_PASSWORD,
