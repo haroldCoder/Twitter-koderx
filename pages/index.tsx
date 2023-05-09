@@ -1,21 +1,16 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
 import Head from 'next/head'
-import twitter from '../assets/twitter.png'
-import Link from 'next/link'
-import Sidebar from '../components/Sidebar'
+import Sidebar from '@/components/Sidebar'
 import Feed from '@/components/Feed'
 import Widgets from '@/components/Widgets'
 import { useState } from 'react'
 import Login from '@/components/Login'
-
-const inter = Inter({ subsets: ['latin'] })
+import '@fontsource/inter'
 
 export default function Home() {
   const [login, setLogin] = useState<number>(0);
   
   return (
-    <div className=' '>
+    <div>
       <Head>
         <title>Twitter koderx</title>
         <link rel="icon" href='/twitter.svg' />
@@ -35,7 +30,7 @@ export default function Home() {
       <div className='fixed top-[90vh] p-2 w-[100%] flex justify-center bg-green-600'>
         <div className='flex justify-between w-[79%] pl-56'>
             <div>
-              <h2 className='text-2xl text-white font-semibold'>Don't miss what's happening</h2>
+              <h2 className='text-2xl text-white font-semibold'>Don`t miss what`s happening</h2>
               <p className='text-white text-lg'>Twitter users are the first to know.</p>
             </div>
             <div className='flex py-3 space-x-3'>

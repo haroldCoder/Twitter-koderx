@@ -25,7 +25,7 @@ function Feed() {
         {
             twts != "" ?
             twts.map((e: any) =>(
-                <div className='text-white'>
+                <div key={e.id} className='text-white'>
                     {e.content}
                 </div>
             ))
