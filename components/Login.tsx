@@ -29,7 +29,7 @@ function Login({mess, set}: Props) {
   const [image, setImage] = useState<any>('');
 
   const ValidateLogin = async() =>{
-    await axios.get("http://localhost:5000/apitwt/users/login/"+username+"/"+password)
+    await axios.get("https://twitter-koderx-production.up.railway.app/apitwt/users/login/"+username+"/"+password)
     .then(res=>{
       Cookies.set("name", res.data[0].name);
       Cookies.set("password", res.data[0].password);

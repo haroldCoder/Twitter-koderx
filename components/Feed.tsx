@@ -12,7 +12,7 @@ function Feed() {
   }, [])
 
   const getTweets = async() =>{
-    const res = (await axios.get("http://localhost:5000/apitwt/tweets")).data;
+    const res = (await axios.get("https://twitter-koderx-production.up.railway.app/apitwt/tweets")).data;
     setTwts(res);
 }
   return (

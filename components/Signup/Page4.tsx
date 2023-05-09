@@ -17,7 +17,7 @@ function Page4({set, fm, setFormData, image}: any) {
         formData.append("imagen", image);
 
         // realizar la solicitud POST con axios
-        axios.post("http://localhost:5000/apitwt/users", formData, {
+        axios.post("https://twitter-koderx-production.up.railway.app/apitwt/users", formData, {
         headers: {
             "Content-Type": "multipart/form-data" // asegurarse de establecer el encabezado correcto
         }

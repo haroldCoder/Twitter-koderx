@@ -16,7 +16,7 @@ function TweetBox() {
     const [id, setId] = useState<number>(0);
     
     const getPerf = async() =>{
-        await axios.get("http://localhost:5000/apitwt/users")
+        await axios.get("https://twitter-koderx-production.up.railway.app/apitwt/users")
         .then(res=>{
             res.data.map((e: any)=>{
                 if(e.name == Cookies.get("name")){
