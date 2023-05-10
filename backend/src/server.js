@@ -17,7 +17,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 
-app.get("/apitwt/users", (req, res)=>{
+app.get("/apitwt/users", cors(), (req, res)=>{
     db.query("SELECT * FROM users", (err, result)=>{
         if(err) throw err;
         const data = result.map(user => {
