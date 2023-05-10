@@ -8,6 +8,7 @@ import Pagel1 from './Logins/Pagel1'
 import Pagel2 from './Logins/Pagel2'
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import { API_SERVER } from '@/config'
 
 interface Props{
     mess: number,
@@ -29,13 +30,14 @@ function Login({mess, set}: Props) {
   const [image, setImage] = useState<any>('');
 
   const ValidateLogin = async() =>{
-    await axios.get("https://twitter-koderx-production.up.railway.app/apitwt/users/login/"+username+"/"+password)
+    await axios.get(`${API_SERVER}apitwt/users/login/${username}/${password}`)
     .then(res=>{
       Cookies.set("name", res.data[0].name);
       Cookies.set("password", res.data[0].password);
+      window.location.reload()
     })
     .catch(err=>console.log(err))
-    window.location.reload()
+    
   }
 
   const signup = [

@@ -2,6 +2,7 @@ import AutorenewIcon from '@mui/icons-material/Autorenew';
 import React, {useEffect, useMemo, useState} from 'react'
 import TweetBox from './TweetBox';
 import axios from 'axios';
+import { API_SERVER } from '@/config';
 
 function Feed() {
 
@@ -12,9 +13,12 @@ function Feed() {
   }, [])
 
   const getTweets = async() =>{
-    const res = (await axios.get("https://twitter-koderx-production.up.railway.app/apitwt/tweets")).data;
+     console.log(`${API_SERVER}apitwt/tweets`);
+     
+    const res = (await axios.get(`${API_SERVER}apitwt/tweets`)).data;
     setTwts(res);
 }
+
   return (
     <div className='col-span-7 ml-3 lg:col-span-5'>
         <div className='text-white flex items-center justify-between'>

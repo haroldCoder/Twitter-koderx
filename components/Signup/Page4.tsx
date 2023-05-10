@@ -2,6 +2,7 @@ import React from 'react'
 import { CloseOutlined } from '@mui/icons-material'
 import axios from 'axios'
 import Cookies from 'js-cookie';
+import {API_SERVER} from '../../config';
 
 function Page4({set, fm, setFormData, image}: any) {
     const onChangePassword = (e: any) =>{
@@ -17,7 +18,7 @@ function Page4({set, fm, setFormData, image}: any) {
         formData.append("imagen", image);
 
         // realizar la solicitud POST con axios
-        axios.post("https://twitter-koderx-production.up.railway.app/apitwt/users", formData, {
+        axios.post(`${API_SERVER}apitwt/users`, formData, {
         headers: {
             "Content-Type": "multipart/form-data" // asegurarse de establecer el encabezado correcto
         }

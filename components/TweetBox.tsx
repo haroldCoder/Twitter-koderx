@@ -8,6 +8,7 @@ import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { API_SERVER } from '@/config';
 
 function TweetBox() {
     const [input, setInput] = useState<string>('')
@@ -16,7 +17,7 @@ function TweetBox() {
     const [id, setId] = useState<number>(0);
     
     const getPerf = async() =>{
-        await axios.get("https://twitter-koderx-production.up.railway.app/apitwt/users")
+        await axios.get(`${API_SERVER}apitwt/users`)
         .then(res=>{
             res.data.map((e: any)=>{
                 if(e.name == Cookies.get("name")){
@@ -30,25 +31,36 @@ function TweetBox() {
         getPerf()  
     }, [])
 
-
-    const PostTwitt = async(e: any) =>{
+    
+    const PostTwitt = async (e: any) => {
         e.preventDefault();
-
-        const res = await axios.get("http://localhost:5000/apitwt/userid/"+Cookies.get("name"))
-        .then(res=>{setId(res.data[0].id), console.log(res.data)
-        })
-        .catch(err=>console.log(err)) 
-
-        axios.post("http://localhost:5000/apitwt/newtwt", {
+      
+        try {
+          const id = await getId();
+      
+          await axios.post("http://localhost:5000/apitwt/newtwt", {
             content: input,
-            iduser: id
-        })
-        .then(res=>console.log(res)
-        )
-        .catch(err=>console.log(err)
-        )
-
-    }
+            iduser: id,
+          });
+      
+          console.log("Tweet posted successfully!");
+          setInput('');
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      
+      const getId = async () => {
+        try {
+          const res = await axios.get(
+            "http://localhost:5000/apitwt/userid/" + Cookies.get("name")
+          );
+      
+          return res.data[0].id;
+        } catch (error) {
+          console.error(error);
+        }
+      };
   return (
     <div className='flex space-x-2 p-5'>
         <Image src={perf ? URL.createObjectURL(perfilSrc) : coder} width='100' height={100} className='w-14 mt-4 object-cover h-14 rounded-full' alt='perfil' />
