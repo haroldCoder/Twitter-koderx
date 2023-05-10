@@ -18,6 +18,7 @@ const upload = multer({ storage });
 
 
 app.get("/apitwt/users", cors(), (req, res)=>{
+    res.header('Access-Control-Allow-Origin', 'https://twitter-koderx-clone.vercel.app');
     db.query("SELECT * FROM users", (err, result)=>{
         if(err) throw err;
         const data = result.map(user => {
