@@ -38,7 +38,7 @@ function TweetBox() {
         try {
           const id = await getId();
       
-          await axios.post(API_SERVER, {
+          await axios.post(`${API_SERVER}apitwt/newtwt`, {
             content: input,
             iduser: id,
           });
@@ -53,7 +53,7 @@ function TweetBox() {
       const getId = async () => {
         try {
           const res = await axios.get(
-            API_SERVER + Cookies.get("name")
+            `${API_SERVER}apitwt/userid/${Cookies.get("name")}`
           );
       
           return res.data[0].id;
