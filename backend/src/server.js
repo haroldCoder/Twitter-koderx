@@ -7,7 +7,7 @@ const fs = require("fs");
 const multer = require("multer");
 const cors = require("cors");
 
-app.use(cors({origin: "*"}));
+app.use(cors());
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit: 1000000}));
 
