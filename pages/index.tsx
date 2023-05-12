@@ -5,9 +5,11 @@ import Widgets from '@/components/Widgets'
 import { useState } from 'react'
 import Login from '@/components/Login'
 import '@fontsource/inter'
+import Cookies from 'js-cookie'
 
 export default function Home() {
   const [login, setLogin] = useState<number>(0);
+  const [showLogin, setShowLogin] = useState(true);
   
   return (
     <div>
@@ -27,6 +29,8 @@ export default function Home() {
           {/* Widgets */}
           <Widgets/>
       </main>
+      {
+        showLogin && Cookies.get("name") == undefined ?
       <div className='fixed top-[90vh] p-2 w-[100%] flex justify-center bg-green-600'>
         <div className='flex justify-between w-[79%] pl-56'>
             <div>
@@ -39,10 +43,12 @@ export default function Home() {
             </div>
           </div>
       </div>
+      : null
+      }
       {
         login == 1 || login == 2 ? 
         <div className='absolute w-[35%] top-[10%] left-[30%]'>
-          <Login mess={login} set={setLogin} />
+          <Login mess={login} showl={setShowLogin} set={setLogin} />
         </div>
         : null
       }

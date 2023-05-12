@@ -1,5 +1,5 @@
 const {Router} = require("express");
-const {getUsers, AddUser, getUser, getUserByName} = require("../controllers/users.controllers");
+const {getUsers, AddUser, getUser, getUserByName, getUserById} = require("../controllers/users.controllers");
 const multer = require("multer");
 
 const storage = multer.memoryStorage();
@@ -16,5 +16,8 @@ route.route("/users/login/:user/:password")
 
 route.route("/userid/:name")
 .get(getUserByName)
+
+route.route("/user/:id")
+.get(getUserById)
 
 module.exports = route;

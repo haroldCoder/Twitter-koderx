@@ -13,9 +13,9 @@ function Feed() {
   }, [])
 
   const getTweets = async() =>{
-     console.log(`${API_SERVER}apitwt/tweets`);
-     
     const res = (await axios.get(`${API_SERVER}apitwt/tweets`)).data;
+    console.log(res);
+    
     setTwts(res);
 }
 
@@ -29,8 +29,12 @@ function Feed() {
         {
             twts != "" ?
             twts.map((e: any) =>(
-                <div key={e.id} className='text-white'>
-                    {e.content}
+                <div key={e.id} className='border-2 mb-5 rounded-lg border-[#b3b3b3] p-4'>
+                  <div className='title mb-1 flex'>
+                    <h2 className='text-white font-bold'>{e.name}</h2>
+                    <h3 className='text-gray-500 ml-1'>@{e.name}</h3>
+                  </div>
+                    <h3 className='text-white'>{e.content}</h3>
                 </div>
             ))
             : null

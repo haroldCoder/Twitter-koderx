@@ -41,6 +41,15 @@ users.getUserByName = (req, res) =>{
     })
 }
 
+users.getUserById = (req, res) =>{
+    const {id} = req.params;
+
+    db.query(`SELECT name FROM users WHERE id = ${id}`, (err, resu)=>{
+        if(err) throw err;
+        res.json(resu);
+    })
+}
+
 users.AddUser = (req, res)  =>{
     const {name, tel, email, password} = req.body;
 

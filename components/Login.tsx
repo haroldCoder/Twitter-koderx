@@ -12,9 +12,10 @@ import { API_SERVER } from '@/config'
 
 interface Props{
     mess: number,
-    set: any
+    set: any,
+    showl: any
 }
-function Login({mess, set}: Props) {
+function Login({mess, set, showl}: Props) {
   const [msg, setMsg] = useState<string>(mess == 1 ? 'Join Twitter today' : (mess == 2 ? 'Sign in to Twitter' : ''));
   const [index, setIndex] = useState<number>(0);
   const [formData, setFormData] = useState({
@@ -35,6 +36,7 @@ function Login({mess, set}: Props) {
       Cookies.set("name", res.data[0].name);
       Cookies.set("password", res.data[0].password);
       window.location.reload()
+      showl(false);
     })
     .catch(err=>console.log(err))
     
@@ -51,7 +53,7 @@ function Login({mess, set}: Props) {
       <Page3 set={set} fm={formData} setImage={setImage} index={index} setIndex={setIndex} setFormData={setFormData} />
     ),
     ()=>(
-      <Page4 set={set} image={image} fm={formData} setFormData={setFormData} />
+      <Page4 set={set} showl={showl} image={image} fm={formData} setFormData={setFormData} />
     )
   ];
   const Logins = [

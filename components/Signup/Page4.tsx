@@ -4,7 +4,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie';
 import {API_SERVER} from '../../config';
 
-function Page4({set, fm, setFormData, image}: any) {
+function Page4({set, fm, setFormData, image, showl}: any) {
     const onChangePassword = (e: any) =>{
         setFormData({...fm, password: e.target.value})
     }
@@ -28,6 +28,7 @@ function Page4({set, fm, setFormData, image}: any) {
           Cookies.set("name", fm.name);
           Cookies.set("password", fm.password);
           Cookies.set("perf", image);
+          showl(false);
         }).catch((err) => {
           console.log(err);
         });

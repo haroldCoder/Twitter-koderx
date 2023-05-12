@@ -3,10 +3,13 @@ const tweets = {};
 const db = require("../db/connect");
 
 tweets.getTweets = (req, res) =>{
-    db.query("SELECT * FROM tweets", (err, resu)=>{
-        if(err) throw err;
-        res.json(resu);
-    })
+    db.query(
+        "SELECT tweets.Id, tweets.content, users.name FROM tweets JOIN users ON tweets.iduser = users.id",
+        (err, result) => {
+          if (err) throw err;
+          res.json(result);
+        }
+    );
 }
 
 tweets.addTweet = (req, res) =>{
