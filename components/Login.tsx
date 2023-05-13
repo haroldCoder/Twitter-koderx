@@ -35,7 +35,6 @@ function Login({mess, set, showl}: Props) {
     .then(res=>{
       Cookies.set("name", res.data[0].name);
       Cookies.set("password", res.data[0].password);
-      window.location.reload()
       showl(false);
     })
     .catch(err=>console.log(err))
