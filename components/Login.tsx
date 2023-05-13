@@ -3,7 +3,6 @@ import Page1 from './Signup/Page1'
 import Page2 from './Signup/Page2'
 import Page3 from './Signup/Page3'
 import Page4 from './Signup/Page4'
-
 import Pagel1 from './Logins/Pagel1'
 import Pagel2 from './Logins/Pagel2'
 import axios from 'axios'
@@ -33,6 +32,8 @@ function Login({mess, set, showl}: Props) {
   const ValidateLogin = async() =>{
     await axios.get(`${API_SERVER}apitwt/users/login/${username}/${password}`)
     .then(res=>{
+      console.log(res);
+      
       Cookies.set("name", res.data[0].name);
       Cookies.set("password", res.data[0].password);
       showl(false);

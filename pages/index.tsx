@@ -30,7 +30,7 @@ export default function Home() {
           <Widgets/>
       </main>
       {
-        showLogin && Cookies.get("name") == "" ?
+        showLogin || Cookies.get("name") == "" ?
           <>
             <div className='fixed top-[90vh] p-2 w-[100%] flex justify-center bg-green-600'>
               <div className='flex justify-between w-[79%] pl-56'>
