@@ -32,11 +32,10 @@ function Login({mess, set, showl}: Props) {
   const ValidateLogin = async() =>{
     await axios.get(`${API_SERVER}apitwt/users/login/${username}/${password}`)
     .then(res=>{
-      console.log(res);
-      
       Cookies.set("name", res.data[0].name);
       Cookies.set("password", res.data[0].password);
       showl(false);
+      window.location.reload();
     })
     .catch(err=>console.log(err))
     

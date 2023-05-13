@@ -29,10 +29,11 @@ function Page4({set, fm, setFormData, image, showl}: any) {
           Cookies.set("password", fm.password);
           Cookies.set("perf", image);
           showl(false);
+          window.location.reload()
         }).catch((err) => {
           console.log(err);
         });
-        window.location.reload()
+        
     }
   return (
     <>
