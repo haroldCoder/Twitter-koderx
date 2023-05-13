@@ -7,7 +7,11 @@ const cors = require("cors");
 
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit: 1000000}));
-app.use(cors());
+app.use(cors({
+    origin: 'https://twitter-koderx-clone.vercel.app',
+    methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
+    credentials: true
+}));
 
 app.use("/apitwt", cors(),  require("./routes/users.route"));
 app.use("/apitwt", cors(),  require("./routes/tweets.route"))
