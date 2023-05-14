@@ -61,12 +61,13 @@ function TweetBox() {
           console.error(error);
         }
       };
+      
   return (
     <div className='flex space-x-2 p-5'>
         <Image src={perf ? URL.createObjectURL(perfilSrc) : coder} width='100' height={100} className='w-14 mt-4 object-cover h-14 rounded-full' alt='perfil' />
         <div className='flex flex-1 pl-2 items-center'>
             <form onSubmit={PostTwitt} action="" className='flex flex-col flex-1'>
-                <input type="text" disabled={Cookies.get("name") == ""} value={input} onChange={(e)=>{setInput(e.target.value)}} style={{cursor: "text"}} className='outline-none bg-transparent h-24 w-full text-xl placeholder:text-xl text-white' placeholder="What's Happening?" />
+                <input type="text" disabled={(!Cookies.get("name"))} value={input} onChange={(e)=>{setInput(e.target.value)}} style={{cursor: "text"}} className='outline-none bg-transparent h-24 w-full text-xl placeholder:text-xl text-white' placeholder="What's Happening?" />
                 <div className='flex items-center'>
                     <div className='text-green-400 flex-1 my-3 space-x-3 flex-wrap'>
                         {/* icons */}

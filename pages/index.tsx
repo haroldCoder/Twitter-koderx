@@ -6,31 +6,32 @@ import { useState } from 'react'
 import Login from '@/components/Login'
 import '@fontsource/inter'
 import Cookies from 'js-cookie'
+import dynamic from 'next/dynamic'
 
-export default function Home() {
+function Home() {
   const [login, setLogin] = useState<number>(0);
   const [showLogin, setShowLogin] = useState(true);
   
   return (
-    <div>
-      <Head>
-        <title>Twitter koderx</title>
-        <link rel="icon" href='/twitter.svg' />
-      </Head>
-      <main className='grid grid-cols-10 ml-[10%] mr-[10%] max-w-[100%] max-h-screen'>
+      <div>
+        <Head>
+          <title>Twitter koderx</title>
+          <link rel="icon" href='/twitter.svg' />
+        </Head>
+        <main className='grid grid-cols-10 ml-[10%] mr-[10%] max-w-[100%] max-h-screen'>
 
-          {/* Sidebar */}
+            {/* Sidebar */}
 
-          <Sidebar/>
-          {/* Feed */}
+            <Sidebar/>
+            {/* Feed */}
 
-          <Feed/>
+            <Feed/>
 
-          {/* Widgets */}
-          <Widgets/>
-      </main>
-      {
-        showLogin || Cookies.get("name") == "" ?
+            {/* Widgets */}
+            <Widgets/>
+        </main>
+        {
+          (!Cookies.get("name")) ?
           <>
             <div className='fixed top-[90vh] p-2 w-[100%] flex justify-center bg-green-600'>
               <div className='flex justify-between w-[79%] pl-56'>
@@ -46,15 +47,17 @@ export default function Home() {
             </div>
           </>
           :
-          null
-      }
-      {
-        login == 1 || login == 2 ? 
-        <div className='absolute w-[35%] top-[10%] left-[30%]'>
-          <Login mess={login} showl={setShowLogin} set={setLogin} />
-        </div>
-        : null
-      }
-    </div>
+            null
+        }
+        {
+          login == 1 || login == 2 ? 
+          <div className='absolute w-[35%] top-[10%] left-[30%]'>
+            <Login mess={login} showl={setShowLogin} set={setLogin} />
+          </div>
+          : null
+        }
+      </div>
   )
 }
+
+export default dynamic(()=>Promise.resolve(Home), {ssr: false});
