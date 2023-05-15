@@ -8,6 +8,7 @@ import Pagel2 from './Logins/Pagel2'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { API_SERVER } from '@/config'
+import { Alert } from '@mui/material'
 
 interface Props{
     mess: number,
@@ -28,14 +29,23 @@ function Login({mess, set, showl}: Props) {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [image, setImage] = useState<any>('');
+  const [islog, setIslog] = useState(true);
 
   const ValidateLogin = async() =>{
     await axios.get(`${API_SERVER}apitwt/users/login/${username}/${password}`)
     .then(res=>{
-      Cookies.set("name", res.data[0].name);
-      Cookies.set("password", res.data[0].password);
+      try{
+        Cookies.set("name", res.data[0].name);
+        Cookies.set("password", res.data[0].password);
+        window.location.reload(); 
+      }
+      catch(err){
+        setIslog(false);
+      }
       showl(false);
-      window.location.reload();
+      setTimeout(()=>{
+        set("")
+      }, 1000)
     })
     .catch(err=>console.log(err))
     
@@ -65,6 +75,7 @@ function Login({mess, set, showl}: Props) {
     ]
 
   return (
+    <>
     <div className='h-[auto] w-full bg-[#00000000] border-2 border-white backdrop-blur-[2px] rounded-md py-1 pb-5 px-3'>
       {
         mess == 1 ?
@@ -76,7 +87,14 @@ function Login({mess, set, showl}: Props) {
           {signup[index]()}
         </div>
       }
+      
     </div>
+    {
+      !islog ?
+      <Alert className='fixed w-[30%] bottom-[12%] left-[68%] border-2 border-white' style={{background: "#000", color: "red"}} severity='error'>User not exist</Alert>
+      : null
+    }
+    </>
   )
 }
 

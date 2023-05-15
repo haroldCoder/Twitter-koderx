@@ -9,6 +9,7 @@ import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlin
 import ClearAllOutlinedIcon from '@mui/icons-material/ClearAllOutlined';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import Cookies from 'js-cookie';
 
 function Sidebar() {
   return (
@@ -19,7 +20,7 @@ function Sidebar() {
         <SidebarRow Icon={NotificationsNoneOutlinedIcon} title='Notifications' />
         <SidebarRow Icon={BookmarkBorderOutlinedIcon} title='Bookmark'  />
         <SidebarRow Icon={ClearAllOutlinedIcon} title='Lists' />
-        <SidebarRow Icon={PersonOutlineOutlinedIcon} title='Sign in' />
+        <SidebarRow Icon={PersonOutlineOutlinedIcon} title={!Cookies.get("name") ? 'Sign in' : 'Sign Out'} />
         <SidebarRow Icon={MoreHorizIcon} title='More' />
     </div>
   )

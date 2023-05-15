@@ -21,7 +21,7 @@ users.getUsers = (req, res)=>{
 users.getUser = (req, res) =>{
     const {user, password} = req.params;
 
-    db.query(`SELECT * FROM users WHERE name = "${user}" OR email = "${user}" OR tel = "${user}" AND password = "${password}"`, (err, result)=>{
+    db.query(`SELECT * FROM users WHERE (name = "${user}" OR email = "${user}" OR tel = "${user}") AND password = "${password}"`, (err, result)=>{
         if(err) throw err, res.json(err), console.log(err);;
         if(result.length > 0){
             res.json(result);

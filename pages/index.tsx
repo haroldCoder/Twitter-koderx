@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Sidebar from '@/components/Sidebar'
 import Feed from '@/components/Feed'
 import Widgets from '@/components/Widgets'
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Login from '@/components/Login'
 import '@fontsource/inter'
 import Cookies from 'js-cookie'
@@ -11,7 +11,7 @@ import dynamic from 'next/dynamic'
 function Home() {
   const [login, setLogin] = useState<number>(0);
   const [showLogin, setShowLogin] = useState(true);
-  
+
   return (
       <div>
         <Head>
