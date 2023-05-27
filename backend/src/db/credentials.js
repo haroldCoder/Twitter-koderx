@@ -1,8 +1,8 @@
-const DB_HOST = process.env.DB_HOST || 'localhost'
+const DB_HOST = process.env.DB_HOST || 'containers-us-west-10.railway.app'
 const DB_USER = process.env.DB_USER || 'root'
-const DB_PASSWORD = process.env.DB_PASSWORD || '2364144'
-const DB_NAME = process.env.DB_NAME || 'users'
-const DB_PORT = process.env.DB_PORT || 3306
+const DB_PASSWORD = process.env.DB_PASSWORD || 'LYxJYRUVXMHfZjvyFDcW'
+const DB_NAME = process.env.DB_NAME || 'railway'
+const DB_PORT = process.env.DB_PORT || 5934
 const PORT = process.env.PORT || 5000
 
 module.exports = {
