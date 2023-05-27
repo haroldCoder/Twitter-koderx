@@ -1,6 +1,4 @@
 const users = {}
-
-const { log } = require("console");
 const db = require("../db/connect");
 
 users.getUsers = (req, res)=>{
