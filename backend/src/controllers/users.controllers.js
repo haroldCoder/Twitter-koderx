@@ -53,9 +53,9 @@ users.AddUser = (req, res)  =>{
 
     const selectSql = 'SELECT * FROM users WHERE name = ? OR tel = ? OR email = ?';
     db.query(selectSql, [name, tel, email], (err, result) => {
-        if (err) throw err, res.send("9"), console.log(err);
+        if (err) throw err, res.send("9"), console.log(err);  
         if (result.length > 0) {
-            res.send('Error: this data exist in to db');
+            res.status(500).send('Error: this data exist in to db');
         } else {
             const insertSql = 'INSERT INTO users (name, tel, email, password, perf) VALUES (?, ?, ?, ?, ?)';
             db.query(insertSql, [name, tel, email, password, req.file.buffer], (err, result) => {

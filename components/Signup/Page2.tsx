@@ -41,7 +41,7 @@ export default function Page2({index, setIndex, set, formData, setFormData}: any
           <form onSubmit={handleSubmit} className='mt-8 flex  flex-col' action="">
             <div className='space-y-10'>
               <input type="text" placeholder='Name' value={formData.name} onChange={onChangeName} className='shadow p-5 appearance-none bg-transparent focus:border-green-600 border-2 focus:text-white border-gray-500 rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline' />
-              <input type={tel ? 'tel' : "email"} value={tel ? formData.tel : formData.email} onChange={tel ? onChangePhone : onChangeEmail} placeholder={tel ? 'Phone' : 'Email'} className='shadow p-5 appearance-none bg-transparent focus:border-green-600 border-2 focus:text-white border-gray-500 rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline' />
+              <input type={tel ? 'tel' : "email"} value={tel ? formData.tel : formData.email} maxLength={tel ? 13 : 50} onChange={tel ? onChangePhone : onChangeEmail} placeholder={tel ? 'Phone' : 'Email'} className='shadow p-5 appearance-none bg-transparent focus:border-green-600 border-2 focus:text-white border-gray-500 rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline' />
             </div>
             <div onClick={()=>setTel(!tel)} className='cursor-pointer select-none flex text-green-600 justify-end' style={{margin: "12px 0"}}>{tel ? 'use mail' : 'use phone'}</div>
             <div className='foot'>
