@@ -8,16 +8,22 @@ function Feed() {
 
   const [twts, setTwts] = useState<any>([])
 
-  useEffect(()=>{
+  useEffect(() => {
     getTweets();
-  }, [])
+
+    const timer = setInterval(() => {
+      getTweets();
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   const getTweets = async() =>{
     const res = (await axios.get(`${API_SERVER}apitwt/tweets`)).data;
-    console.log(res);
-    
     setTwts(res);
-}
+  }
 
   return (
     <div className='col-span-7 ml-3 lg:col-span-5'>
