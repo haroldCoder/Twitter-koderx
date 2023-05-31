@@ -51,8 +51,8 @@ users.getUserById = (req, res) =>{
 users.AddUser = (req, res)  =>{
     const {name, tel, email, password} = req.body;
 
-    const selectSql = 'SELECT * FROM users WHERE name = ? OR tel = ?';
-    db.query(selectSql, [name, tel], (err, result) => {
+    const selectSql = 'SELECT * FROM users WHERE tel = ? OR email = ?';
+    db.query(selectSql, [name, tel, email], (err, result) => {
         if (err) throw err, res.send("9"), console.log(err);  
         if (result.length > 0) {
             res.status(500).send('Error: this data exist in to db');
