@@ -1,19 +1,23 @@
 let comments = {};
 const db = require("../db/connect");
 
-comments.getComments = (req, res) =>{
-    const {id} = req.params;
-    try{
-        db.query(`SELECT DATE_FORMAT(date, '%d/%m/%Y') AS date, Author, response FROM comments WHERE idtweet = ${id}`, (err, result)=>{
-            if(err) throw err, res.send(err);
-            else
-                res.status(200).send(result);
-        })
+comments.getComments = (req, res) => {
+    const { id } = req.params;
+    try {
+      db.query(
+        `SELECT DATE_FORMAT(date, '%d/%m/%Y') AS date, Author, response FROM comments WHERE idtweet = ${id}`,
+        (err, result) => {
+          if (err) {
+            res.status(500).send(err);
+          } else {
+            res.status(200).send(result);
+          }
+        }
+      );
+    } catch (err) {
+      res.status(500).send(err);
     }
-    catch(err){
-        res.status(404).send("error",err);
-    }
-}
+  };
 
 comments.addComments = (req, res) =>{
     try{
