@@ -1,5 +1,5 @@
 import AutorenewIcon from '@mui/icons-material/Autorenew';
-import React, {useEffect, useMemo, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import TweetBox from './TweetBox';
 import axios from 'axios';
 import { API_SERVER } from '@/config';
@@ -50,7 +50,7 @@ function Feed() {
         {
             twts != "" ?
             twts.map((e: any) =>(
-                <Post id={e.Id} name={e.name} content={e.content} openmsg={openmsg} setOpenMsg={setOpenmsg} setId={setId} />
+                <Post key={e.id} id={e.Id} name={e.name} content={e.content} openmsg={openmsg} setOpenMsg={setOpenmsg} setId={setId} />
             ))
             : null
         }
@@ -59,7 +59,7 @@ function Feed() {
           <div className='w-[40%] top-[15%] left-[25%] absolute'>
             {
               twtId.map((e:any)=>(
-                <Comments name={e.name} id={id} content={e.content} setOpenMsg={setOpenmsg} />
+                <Comments key={e.id} name={e.name} id={id} content={e.content} setOpenMsg={setOpenmsg} />
               ))
             }
           </div>

@@ -45,7 +45,7 @@ export default function Post({id, name, content, setOpenMsg, setId} : post) {
         {
           comments.length > 0 ?
           comments.map((e:any)=>(
-            <div className='text-white mt-4 border-t-[1px] border-green-500 p-2'>
+            <div key={e.Author} className='text-white mt-4 border-t-[1px] border-green-500 p-2'>
               <div className='flex justify-between w-[10vw]'>
                 <h2 className='text-green-500'>@{e.Author}</h2>
                 <h2 className='text-white'>{e.date}</h2>
