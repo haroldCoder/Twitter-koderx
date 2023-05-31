@@ -12,6 +12,17 @@ tweets.getTweets = (req, res) =>{
     );
 }
 
+tweets.getTweet = (req, res) =>{
+    const {id} = req.params;
+    db.query(
+        `SELECT tweets.Id, tweets.content, users.name FROM tweets JOIN users ON tweets.iduser = users.id WHERE tweets.Id = ${id}`,
+        (err, result) => {
+          if (err) throw err, console.log("err",err);
+          res.json(result);
+        }
+    );
+}
+
 tweets.addTweet = (req, res) =>{
     const {content, iduser} = req.body;
     console.log(iduser);

@@ -3,14 +3,18 @@ import React, {useEffect, useMemo, useState} from 'react'
 import TweetBox from './TweetBox';
 import axios from 'axios';
 import { API_SERVER } from '@/config';
+import Post from './Post';
+import Comments from './Comments';
 
 function Feed() {
 
   const [twts, setTwts] = useState<any>([])
+  const [openmsg, setOpenmsg] = useState<boolean>(false);
+  const [id, setId] = useState<number>(0);
+  const [twtId, setTwtId] = useState<[]>([]);
 
   useEffect(() => {
     getTweets();
-
     const timer = setInterval(() => {
       getTweets();
     }, 1000);
@@ -20,9 +24,20 @@ function Feed() {
     };
   }, []);
 
+  useEffect(() => {
+    if(openmsg){
+      getTweetById();
+    }
+  }, [openmsg]);
+
   const getTweets = async() =>{
     const res = (await axios.get(`${API_SERVER}apitwt/tweets`)).data;
     setTwts(res);
+  }
+
+  const getTweetById = async() =>{
+    const res = (await axios.get(`${API_SERVER}apitwt/tweets/${id}`)).data
+    setTwtId(res);     
   }
 
   return (
@@ -35,15 +50,20 @@ function Feed() {
         {
             twts != "" ?
             twts.map((e: any) =>(
-                <div key={e.id} className='border-2 mb-5 rounded-lg border-[#b3b3b3] p-4'>
-                  <div className='title mb-1 flex'>
-                    <h2 className='text-white font-bold'>{e.name}</h2>
-                    <h3 className='text-gray-500 ml-1'>@{e.name}</h3>
-                  </div>
-                    <h3 className='text-white'>{e.content}</h3>
-                </div>
+                <Post id={e.Id} name={e.name} content={e.content} openmsg={openmsg} setOpenMsg={setOpenmsg} setId={setId} />
             ))
             : null
+        }
+        {
+          openmsg ?
+          <div className='w-[40%] top-[15%] left-[25%] absolute'>
+            {
+              twtId.map((e:any)=>(
+                <Comments name={e.name} id={id} content={e.content} />
+              ))
+            }
+          </div>
+          : null
         }
     </div>
   )

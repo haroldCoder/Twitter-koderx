@@ -1,7 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const { PORT } = require("./db/credentials");
-const db = require("./db/connect");
 const app = express();
 const cors = require("cors");
 
@@ -10,7 +9,8 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit: 10
 app.use(cors());
 
 app.use("/apitwt", cors(), require("./routes/users.route"));
-app.use("/apitwt", require("./routes/tweets.route"))
+app.use("/apitwt", require("./routes/tweets.route"));
+app.use("/apitwt", require("./routes/comments.route"));
 
 app.listen(PORT, (err, res)=>{
     if(err) throw err;
