@@ -2,15 +2,17 @@ import { API_SERVER } from '@/config';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { useState } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
 interface twt{
     name: string,
     content: string,
-    id: number
+    id: number,
+    setOpenMsg: Dispatch<SetStateAction<boolean>>
 }
 
-export default function Comments({name, content, id}: twt) {
+export default function Comments({name, content, id, setOpenMsg}: twt) {
     const [response, setResponse] = useState<string>("");
     
     const sendComment = () =>{
@@ -23,6 +25,7 @@ export default function Comments({name, content, id}: twt) {
         .then((res: any)=>{
             console.log(res);
             setResponse("");
+            setOpenMsg(false);
         })
         .catch((err: any)=>{
             console.log(err);
@@ -33,8 +36,9 @@ export default function Comments({name, content, id}: twt) {
   return (
     <div className='bg-gray-800 rounded-md p-3'>
         <section>
-            <div className='title'>
+            <div className='title flex justify-between'>
                 <h2 className='text-white'>@{name}</h2>
+                <button className='text-gray-600 hover:text-green-500' onClick={()=>setOpenMsg(false)}><CloseOutlinedIcon /></button>
             </div>
             <div className='my-5 px-2 py-4 border-[1.5px] border-solid border-white rounded-md'>
                 <h2 className='text-gray-400'>{content}</h2>

@@ -40,7 +40,7 @@ export default function Post({id, name, content, setOpenMsg, setId} : post) {
         <h3 className='text-white'>{content}</h3>
         <div className='justify-between w-[10%] mt-5 text-white flex'>
             <button onClick={()=>{setOpenMsg(true), setId(id)}} className='hover:text-blue-400'><ModeCommentOutlinedIcon /></button>
-            <button className='hover:text-green-500'><FavoriteBorderOutlinedIcon /></button>
+            <button className='hover:text-green-500 cursor-default'><FavoriteBorderOutlinedIcon /></button>
         </div>
         {
           comments.length > 0 ?

@@ -59,7 +59,7 @@ function Feed() {
           <div className='w-[40%] top-[15%] left-[25%] absolute'>
             {
               twtId.map((e:any)=>(
-                <Comments name={e.name} id={id} content={e.content} />
+                <Comments name={e.name} id={id} content={e.content} setOpenMsg={setOpenmsg} />
               ))
             }
           </div>
