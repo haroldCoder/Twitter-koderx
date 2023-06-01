@@ -2,17 +2,23 @@ let comments = {};
 const db = require("../db/connect");
 
 comments.getComments = (req, res) => {
-    const { id } = req.params;
-    db.query(
-        `SELECT DATE_FORMAT(date, '%d/%m/%Y') AS date, Author, response FROM comments WHERE idtweet = ${id}`,
-        (err, result) => {
-            if (err) {
-                res.status(500).send(err);
-            } else {
-                res.status(200).send(result);
+    try{
+        const { id } = req.params;
+        db.query(
+            `SELECT DATE_FORMAT(date, '%d/%m/%Y') AS date, Author, response FROM comments WHERE idtweet = ${id}`,
+            (err, result) => {
+                if (err) {
+                    res.status(500).send(err);
+                } else {
+                    res.status(200).send(result);
+                }
             }
-        }
-    );
+        );
+    }
+    catch(err){
+        res.status(500).send("Ocurred error in the server");
+        throw err;
+    }
   };
 
 comments.addComments = (req, res) =>{

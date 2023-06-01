@@ -32,7 +32,7 @@ function Page4({set, fm, setFormData, image, showl}: any) {
           window.location.reload();
         }).catch((err) => {
           console.log(err);
-          alert('Ocurred error');
+          alert(`Ocurred error, ${err.response.data}`);
         });
         
     }

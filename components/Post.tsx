@@ -3,6 +3,7 @@ import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import axios from 'axios';
 import { API_SERVER } from '@/config';
+import Cookies from 'js-cookie';
 
 interface post{
     id: number,
@@ -39,7 +40,7 @@ export default function Post({id, name, content, setOpenMsg, setId} : post) {
         </div>
         <h3 className='text-white'>{content}</h3>
         <div className='justify-between w-[10%] mt-5 text-white flex'>
-            <button onClick={()=>{setOpenMsg(true), setId(id)}} className='hover:text-blue-400'><ModeCommentOutlinedIcon /></button>
+            <button onClick={()=>{Cookies.get("name") != null ? setOpenMsg(true) : alert("you must register first"), setId(id)}} className='hover:text-blue-400'><ModeCommentOutlinedIcon /></button>
             <button className='hover:text-green-500 cursor-default'><FavoriteBorderOutlinedIcon /></button>
         </div>
         {

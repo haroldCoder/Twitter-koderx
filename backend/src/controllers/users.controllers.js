@@ -25,6 +25,7 @@ users.getUser = (req, res) =>{
             res.json(result);
         }
         else{
+            console.log(user, password);
             res.json({"mess": "user not exist"})
         }
     })
@@ -49,13 +50,35 @@ users.getUserById = (req, res) =>{
 }
 
 users.AddUser = (req, res)  =>{
-    const {name, tel, email, password} = req.body;
+    try{
+        const {name, tel, email, password} = req.body;
+        console.log(`tel: ${tel} y email: ${email}`);
+        db.query(`SELECT 'tel' AS type, COUNT(*) AS count FROM users WHERE tel = ${db.escape(tel)}
+        UNION
+        SELECT 'email' AS type, COUNT(*) AS count FROM users WHERE email = ${db.escape(email)}`, (err, result)=>{
+            if (err) throw err, res.status(500).send(err);
+            const countTel = result.find(row => row.type === 'tel').count;
+            const countEmail = result.find(row => row.type === 'email').count;
 
-    const insertSql = 'INSERT INTO users (name, tel, email, password, perf) VALUES (?, ?, ?, ?, ?)';
-    db.query(insertSql, [name, tel, email, password, req.file.buffer], (err, result) => {
-        if (err) throw err, res.send(err);
-        res.send('Image uploaded successfully');
-    });
+            if (countTel > 0 && tel) {
+                res.status(400).send('this tel is exist');
+            } 
+            else if (countEmail > 0 && email) {
+                res.status(400).send(`this email is exist`);
+            }
+            else{
+                const insertSql = 'INSERT INTO users (name, tel, email, password, perf) VALUES (?, ?, ?, ?, ?)';
+                db.query(insertSql, [name, tel, email, password, req.file.buffer], (err, result) => {
+                    if (err) throw err, res.status(500).send(err);
+                    res.send('Image uploaded successfully');
+                });
+            }
+        })
+    }
+    catch(err){
+        res.status(500).send(err);
+        throw err;
+    }
 }
 
 module.exports = users;
