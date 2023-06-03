@@ -35,7 +35,7 @@ export default function Post({id, name, content, setOpenMsg, setId} : post) {
 
   useEffect(()=>{
     getLikes();
-  }, [likes])
+  })
 
 
   const getComments = async() =>{
