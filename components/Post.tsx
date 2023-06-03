@@ -34,7 +34,13 @@ export default function Post({id, name, content, setOpenMsg, setId} : post) {
   });
 
   useEffect(()=>{
-    getLikes();
+    const timer = setInterval(() => {
+      getLikes();
+    }, 1000);
+    
+    return () => {
+      clearInterval(timer);
+    };
   }, [likes])
 
 
@@ -48,11 +54,11 @@ export default function Post({id, name, content, setOpenMsg, setId} : post) {
     setLikes(res[0]); 
   }
 
-  const LikePost = () =>{ 
-    axios.put(`${API_SERVER}apitwt/likes/${likes.ID}`,{
-      len: likes.len+1
+  const LikePost = async() =>{ 
+    await axios.put(`${API_SERVER}apitwt/likes/${likes.ID}`,{
+      len: likes.len+=1
     })
-    .then((res: any)=>{console.log(res), getLikes()})
+    .then((res: any)=>{})
     .catch((err: any)=>console.log(err))
   }
 
