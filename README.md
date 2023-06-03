@@ -33,20 +33,42 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Database
 
-CREATE TABLE pqrs(
-    ID INT PRIMARY KEY AUTO_INCREMENT,
-    IDE INT NOT NULL,
-    Tipo VARCHAR(3),
-    Nombre VARCHAR(30) NOT NULL,
-    Apellidos VARCHAR(30) NOT NULL,
-    Numero BIGINT(12) NOT NULL,
-    Tel INT,
-    Email VARCHAR(50) NOT NULL,
-    Titulo VARCHAR(100) NOT NULL,
-    Ticket VARCHAR(50) NOT NULL,
-    Content_ticket TEXT NOT NULL,
-    Estado VARCHAR(8) NOT NULL CHECK (Estado IN ('abierto', 'cerrado'))
-).
+USERS DB
+
+CREATE TABLE users (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(50) NOT NULL UNIQUE,
+  tel VARCHAR(13),
+  perf LONGBLOB,
+  password VARCHAR(50),
+  date DATE,
+  email VARCHAR(100),
+  CHECK ((tel IS NOT NULL) OR (email IS NOT NULL))
+);
+
+TWEETS DB
+
+
+CREATE TABLE tweets (
+  Id INT PRIMARY KEY AUTO_INCREMENT,
+  content VARCHAR(255),
+  iduser INT,
+  date DATE,
+  FOREIGN KEY (iduser) REFERENCES users(id)
+);
+
+COMMENTS DB
+
+CREATE TABLE Comments(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  response VARCHAR(255) NOT NULL,
+  idtweet INT NOT NULL,
+  date DATE NOT NULL,
+  Author VARCHAR(50) NOT NULL,
+  FOREIGN KEY (idtweet) REFERENCES tweets(id)
+)
+
+
 
 ## Deploy on Vercel
 
