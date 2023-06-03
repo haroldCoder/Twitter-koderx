@@ -35,7 +35,7 @@ export default function Post({id, name, content, setOpenMsg, setId} : post) {
 
   useEffect(()=>{
     getLikes();
-  })
+  }, [likes])
 
 
   const getComments = async() =>{
@@ -52,7 +52,7 @@ export default function Post({id, name, content, setOpenMsg, setId} : post) {
     axios.put(`${API_SERVER}apitwt/likes/${likes.ID}`,{
       len: likes.len+1
     })
-    .then((res: any)=>{console.log(res)})
+    .then((res: any)=>{console.log(res), getLikes()})
     .catch((err: any)=>console.log(err))
   }
 
