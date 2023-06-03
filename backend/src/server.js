@@ -11,6 +11,7 @@ app.use(cors());
 app.use("/apitwt", cors(), require("./routes/users.route"));
 app.use("/apitwt", require("./routes/tweets.route"));
 app.use("/apitwt", require("./routes/comments.route"));
+app.use("/apitwt", require("./routes/likes.route"))
 
 app.listen(PORT, (err, res)=>{
     if(err) throw err;

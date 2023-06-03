@@ -1,6 +1,7 @@
 const tweets = {};
 
 const db = require("../db/connect");
+const LikesSistem = require("../controllers/likes.controllers");
 
 tweets.getTweets = (req, res) =>{
     db.query(
@@ -25,9 +26,10 @@ tweets.getTweet = (req, res) =>{
 
 tweets.addTweet = (req, res) =>{
     const {content, iduser} = req.body;
-    console.log(iduser);
+
     db.query(`INSERT INTO tweets(content, iduser, date) VALUES ("${content}", ${iduser}, NOW())`, (err, resu)=>{
         if(err) throw err;
+        new LikesSistem(null, null, resu.insertId, req, res).CreateLike();
         res.json({"message": "twt posted"})
     })
 }

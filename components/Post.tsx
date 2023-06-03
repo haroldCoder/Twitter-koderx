@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useEffect, useState} from 'react'
+import React, {Dispatch, SetStateAction, useEffect, useMemo, useState} from 'react'
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import axios from 'axios';
@@ -14,22 +14,46 @@ interface post{
     openmsg: boolean
 }
 
+interface Like{
+  ID: number,
+  len: number
+}
+
 export default function Post({id, name, content, setOpenMsg, setId} : post) {
   const [comments, setComments] = useState<[]>([]);
+  const [likes, setLikes] = useState<Like | any>();
 
   useEffect(() => {
     const timer = setInterval(() => {
       getComments();
     }, 1000);
-
+    
     return () => {
       clearInterval(timer);
     };
-  }, []);
+  });
+
+  useEffect(()=>{
+    getLikes();
+  }, [likes])
+
 
   const getComments = async() =>{
     const res = (await axios.get(`${API_SERVER}apitwt/comments/${id}`)).data
     setComments(res);
+  }
+
+  const getLikes = async()=>{
+    const res : any = (await axios.get(`${API_SERVER}apitwt/likes/${id}`)).data
+    setLikes(res[0]); 
+  }
+
+  const LikePost = () =>{ 
+    axios.put(`${API_SERVER}apitwt/likes/${likes.ID}`,{
+      len: likes.len+1
+    })
+    .then((res: any)=>{console.log(res)})
+    .catch((err: any)=>console.log(err))
   }
 
   return (
@@ -39,9 +63,12 @@ export default function Post({id, name, content, setOpenMsg, setId} : post) {
             <h3 className='text-gray-500 ml-1'>@{name}</h3>
         </div>
         <h3 className='text-white'>{content}</h3>
-        <div className='justify-between w-[10%] mt-5 text-white flex'>
+        <div className='justify-between w-[5vw] mt-5 text-white flex'>
             <button onClick={()=>{Cookies.get("name") != null ? setOpenMsg(true) : alert("you must register first"), setId(id)}} className='hover:text-blue-400'><ModeCommentOutlinedIcon /></button>
-            <button className='hover:text-green-500 cursor-default'><FavoriteBorderOutlinedIcon /></button>
+            <div className='flex'>
+              <button className='hover:text-green-500 cursor-pointer' onClick={LikePost}><FavoriteBorderOutlinedIcon /></button>
+              <p className='text-white font-semibold ml-2'>{likes?.len}</p>
+            </div>
         </div>
         {
           comments.length > 0 ?
