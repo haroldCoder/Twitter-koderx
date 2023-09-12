@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useEffect, useMemo, useState} from 'react'
+import React, {Dispatch, SetStateAction, useEffect, useMemo, useRef, useState} from 'react'
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import axios from 'axios';
@@ -16,12 +16,13 @@ interface post{
 
 interface Like{
   ID: number,
-  len: number
+  like: number
 }
 
 export default function Post({id, name, content, setOpenMsg, setId} : post) {
   const [comments, setComments] = useState<[]>([]);
   const [likes, setLikes] = useState<Like | any>();
+  const Id = useRef<number>();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -55,9 +56,14 @@ export default function Post({id, name, content, setOpenMsg, setId} : post) {
   }
 
   const LikePost = async() =>{ 
-    await axios.put(`${API_SERVER}apitwt/likes/${likes.ID}`,{
-      len: likes.len+=1
-    })
+    console.log(Cookies.get("name"));
+    
+    await axios.get(`${API_SERVER}apitwt/userid/${Cookies.get("name")}`)
+    .then((res)=>{Id.current = res.data[0].id, console.log(res.data);
+    });
+    console.log(Id.current);
+    
+    await axios.delete(`${API_SERVER}apitwt/likes/${Id.current}/${likes.ID}`)
     .then((res: any)=>{})
     .catch((err: any)=>console.log(err))
   }
@@ -73,7 +79,7 @@ export default function Post({id, name, content, setOpenMsg, setId} : post) {
             <button onClick={()=>{Cookies.get("name") != null ? setOpenMsg(true) : alert("you must register first"), setId(id)}} className='hover:text-blue-400'><ModeCommentOutlinedIcon /></button>
             <div className='flex'>
               <button className='hover:text-green-500 cursor-pointer' onClick={LikePost}><FavoriteBorderOutlinedIcon /></button>
-              <p className='text-white font-semibold ml-2'>{likes?.len}</p>
+              <p className='text-white font-semibold ml-2'>{likes?.likes}</p>
             </div>
         </div>
         {

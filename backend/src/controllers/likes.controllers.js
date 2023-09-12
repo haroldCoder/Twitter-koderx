@@ -1,17 +1,18 @@
 const db = require("../db/connect");
 
 class LikesSistem{
-    constructor(id, len, idtwt, req, res){
+    constructor(id, len, idtwt, req, res, iduser){
         this.id = id;
         this.len = len;
         this.idtwt = idtwt
         this.req = req;
         this.res = res;
+        this.iduser = iduser
     }
 
     getLikes = () =>{
         try{
-            db.query(`SELECT ID, len FROM likes WHERE idtwt = ${this.idtwt}`, (err, result)=>{
+            db.query(`SELECT ID, COUNT(iduser) as likes FROM likes WHERE idtwt = ${this.idtwt} GROUP BY ID`, (err, result)=>{
                 if(err) throw err, this.res.status(500).send(err);
                 this.res.status(200).json(result)
             });
@@ -23,7 +24,7 @@ class LikesSistem{
 
     CreateLike = () =>{
         try{
-            db.query(`INSERT INTO likes(idtwt) VALUES(${this.idtwt});`, (err, res)=>{
+            db.query(`INSERT INTO likes(idtwt, iduser) VALUES(${this.idtwt}, ${this.iduser});`, (err, res)=>{
                 if(err) throw err, this.res.status(500).send(err)
                 this.res.status(200)
             })
@@ -33,12 +34,18 @@ class LikesSistem{
         }
     }
 
-    UpdateLikes = async() =>{
+    DeleteLike = () =>{
         try{
-            db.query(`UPDATE likes SET len = ${this.len} WHERE ID = ${this.id}`, (err)=>{
-                if(err) throw err, this.res.status(500).send(err);
-                else
-                    this.res.status(200);
+            db.query(`SELECT id FROM likes WHERE idtwt = ${this.idtwt} AND iduser = ${this.iduser}`, (err, res)=>{console.log(res);
+                if(res.length < 1){
+                    this.CreateLike();
+                }
+                
+                else{
+                    db.query(`DELETE FROM likes WHERE idtwt = ${this.idtwt} AND iduser = ${this.iduser}`, (err, res)=>{
+                        this.res.status(200).send("delete like");
+                    })
+                }
             })
         }
         catch(err){
